@@ -15,9 +15,9 @@ const MainNavigation = () => {
         initialRouteName="signIn"
         screenOptions={{ headerShown: false }}
       >
+        <Stack.Screen name="mainMenu" component={TabNavigation} />
         <Stack.Screen name="signIn" component={SignInScreen} />
         <Stack.Screen name="signUp" component={SignUpScreen} />
-        <Stack.Screen name="mainMenu" component={TabNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
   );

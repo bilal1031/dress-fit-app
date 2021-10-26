@@ -93,8 +93,9 @@ const HomeScreen = () => {
             data={images}
             key={(key) => images}
             renderItem={({ item }) => (
-              <View style={{ padding: 5 }}>
+              <View style={{ padding: 5, alignItems: "center" }}>
                 <Avatar.Image size={70} source={{ uri: item }} />
+                <Text>Category Item</Text>
               </View>
             )}
           />
