@@ -188,48 +188,62 @@ const SignUpScreen = (props) => {
           }}
         />
         <View style={styles.bottomView}>
-          <View style={styles.buttonDiv}>
-            <View style={styles.socialButtonDiv}>
-              <Button
-                mode="contained"
-                loading={isLoading}
-                // disabled={!isAgree}
-                onPress={handleSubmit}
-                style={styles.socialbutton}
-                theme={{
-                  colors: { primary: colors.facbook },
-                }}
-                icon="alpha-f-circle"
-              >
-                Facebook
-              </Button>
-              <Button
-                mode="contained"
-                loading={isLoading}
-                // disabled={!isAgree}
-                onPress={handleSubmit}
-                style={styles.socialbutton}
-                theme={{
-                  colors: { primary: colors.google },
-                }}
-                icon="alpha-g-circle"
-              >
-                Google
-              </Button>
-            </View>
-            <Button
-              mode="contained"
-              loading={isLoading}
-              disabled={!isAgree}
-              onPress={handleSubmit}
-              style={styles.button}
-              theme={{
-                colors: { primary: colors.primary },
-              }}
-            >
-              sign up
-            </Button>
+          <Button
+            mode="contained"
+            loading={isLoading}
+            disabled={!isAgree}
+            onPress={handleSubmit}
+            style={styles.roundButton}
+            theme={{
+              colors: { primary: colors.primary },
+            }}
+            contentStyle={styles.button}
+          >
+            sign up
+          </Button>
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              paddingLeft: 20,
+              paddingRight: 20,
+            }}
+          >
+            <View style={styles.seperator} />
+            <Text numberOfLines={1} style={{ fontSize: 18 }}>
+              {"  or  "}
+            </Text>
+            <View style={styles.seperator} />
           </View>
+          <Button
+            mode="contained"
+            loading={isLoading}
+            onPress={handleFacebookSignUp}
+            style={styles.roundButton}
+            theme={{
+              colors: { primary: colors.facbook },
+            }}
+            contentStyle={styles.button}
+            icon={{
+              uri: "https://cdn-icons-png.flaticon.com/512/124/124010.png",
+            }}
+          >
+            Continue with Facebook
+          </Button>
+          <Button
+            mode="contained"
+            loading={isLoading}
+            onPress={handleGoogleSignUp}
+            style={styles.roundButton}
+            theme={{
+              colors: { primary: colors.google },
+            }}
+            contentStyle={styles.button}
+            icon={{ uri: "https://i.stack.imgur.com/TiQ81.png" }}
+          >
+            Continue with Google
+          </Button>
+
           <TouchableOpacity onPress={handleNavigation}>
             <Text style={{ fontSize: 14, fontWeight: "bold" }}>
               Are you already a member?
@@ -272,32 +286,37 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
   },
   bottomView: {
+    padding: 25,
+    height: height * 0.5,
     width: "100%",
-    height: height * 0.2,
-    // backgroundColor: "violet",
+    justifyContent: "space-evenly",
+    paddingLeft: 20,
+    paddingRight: 20,
+    justifyContent: "space-between",
     alignItems: "center",
-    justifyContent: "space-around",
-    marginBottom: 10,
   },
   descp: {
     fontSize: 24,
     textAlign: "center",
   },
-  button: {
-    borderRadius: 50,
-    width: "90%",
-    alignSelf: "center",
-  },
+
   buttonDiv: {
     width: "100%",
   },
-  socialButtonDiv: {
-    flexDirection: "row",
-    justifyContent: "space-around",
-    marginBottom: 15,
+  seperator: { backgroundColor: "grey", height: 0.7, flex: 1 },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
   },
-  socialbutton: {
-    width: "40%",
-    borderRadius: 50,
+  roundButton: {
+    // borderColor: colors.primary,
+    borderWidth: 2,
+    borderRadius: 10,
+    width: "100%",
+  },
+  button: {
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
   },
 });

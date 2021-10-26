@@ -4,6 +4,7 @@ import React, { Component } from "react";
 import { View } from "react-native";
 import SignInScreen from "../Screens/SignInScreen";
 import SignUpScreen from "../Screens/SignUpScreen";
+import TabNavigation from "./TabNavigation";
 
 const Stack = createNativeStackNavigator();
 
@@ -16,6 +17,7 @@ const MainNavigation = () => {
       >
         <Stack.Screen name="signIn" component={SignInScreen} />
         <Stack.Screen name="signUp" component={SignUpScreen} />
+        <Stack.Screen name="mainMenu" component={TabNavigation} />
       </Stack.Navigator>
     </NavigationContainer>
   );

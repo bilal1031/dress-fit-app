@@ -1,6 +1,6 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { Button, TextInput, HelperText } from "react-native-paper";
+import { Button, TextInput, HelperText, IconButton } from "react-native-paper";
 import {
   View,
   Text,
@@ -16,6 +16,7 @@ import logo from "../assets/logo.jpg";
 import colors from "../Utilites/colors";
 import { Ionicons } from "@expo/vector-icons";
 import CheckboxWithDesc from "../Componenets/CheckboxWithDesc";
+import TocuhableText from "../Componenets/TocuhableText";
 
 const height = Dimensions.get("screen").height;
 
@@ -37,12 +38,26 @@ const SignInScreen = (props) => {
   };
   const handleFacebookSignIn = () => {};
   const handleGoogleSignIn = () => {};
+
   return (
     <SafeAreaView style={styles.maincontainer}>
       <StatusBar />
+      <IconButton
+        icon="close"
+        color={colors.primary}
+        size={20}
+        onPress={() => navigation.navigate("mainMenu")}
+        style={{
+          alignSelf: "flex-end",
+          marginEnd: 15,
+        }}
+      />
       <ScrollView style={styles.scrollView}>
         <View style={styles.logoView}>
-          <Image style={styles.logo} source={logo} />
+          <View style={styles.logo}>
+            <Image source={logo} style={{ width: "100%", height: "100%" }} />
+          </View>
+          {/* <Text style={styles.title}>Log in or singup to Dressfit</Text> */}
         </View>
         <View style={styles.formView}>
           <TextInput
@@ -77,7 +92,6 @@ const SignInScreen = (props) => {
                       showPassword ? "ios-eye-off-outline" : "ios-eye-outline"
                     }
                     size={20}
-                    color={colors.darkgrey}
                   />
                 )}
                 onPress={() => setShowPassword(!showPassword)}
@@ -91,76 +105,90 @@ const SignInScreen = (props) => {
               colors: { primary: colors.primary },
             }}
           />
-
-          <CheckboxWithDesc
-            status={keepLogged}
-            description="Keep me signed in"
-            handlePress={() => {
-              setKeepLogged(!keepLogged);
+          <TocuhableText text="Forgot Password!" />
+          <Button
+            mode="contained"
+            style={[styles.roundButton, { marginTop: 25 }]}
+            theme={{
+              colors: { primary: colors.primary },
             }}
-          />
+            onPress={handleFacebookSignIn}
+            contentStyle={styles.button}
+          >
+            Sign In
+          </Button>
         </View>
-        <View style={styles.socialButtonDiv}>
-          <Button
-            mode="contained"
-            loading={isLoading}
-            // disabled={!isAgree}
-            onPress={handleSubmit}
-            style={styles.socialbutton}
-            theme={{
-              colors: { primary: colors.facbook },
-            }}
-            icon="alpha-f-circle"
-          >
-            Facebook
-          </Button>
-          <Button
-            mode="contained"
-            loading={isLoading}
-            // disabled={!isAgree}
-            onPress={handleSubmit}
-            style={styles.socialbutton}
-            theme={{
-              colors: { primary: colors.google },
-            }}
-            icon="alpha-g-circle"
-          >
-            Google
-          </Button>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            paddingLeft: 20,
+            paddingRight: 20,
+          }}
+        >
+          <View style={styles.seperator} />
+          <Text numberOfLines={1} style={{ fontSize: 18 }}>
+            {"  or  "}
+          </Text>
+          <View style={styles.seperator} />
         </View>
         <View style={styles.buttonsContainer}>
-          <Button
-            mode="contained"
+          {/* <Button
+            mode="outlined"
             loading={isLoading}
             onPress={handleSubmit}
-            style={[styles.button, { width: "40%", borderRadius: 40 }]}
+            style={styles.roundButton}
             theme={{
               colors: { primary: colors.primary },
+              fonts: { size: 25 },
             }}
+            contentStyle={styles.button}
+            icon="email-outline"
           >
-            sign in
-          </Button>
-
+            Continue with Email
+          </Button> */}
           <Button
-            mode="text"
-            onPress={() => navigation.navigate("ForgetPassword")}
-            style={styles.button}
+            mode="outlined"
+            loading={isLoading}
+            onPress={handleSubmit}
+            style={styles.roundButton}
             theme={{
               colors: { primary: colors.primary },
             }}
+            contentStyle={styles.button}
+            icon={{
+              uri: "https://cdn-icons-png.flaticon.com/512/124/124010.png",
+            }}
           >
-            forget password?
+            Continue with Facebook
           </Button>
-        </View>
-        <View style={styles.signUpLinkDiv}>
-          <View style={styles.seperator} />
-          <Text numberOfLines={1} style={styles.msgText}>
-            {"  Don't have an account?  "}
-          </Text>
-          <TouchableOpacity onPress={handleNavigation}>
-            <Text style={{ fontSize: 14, fontWeight: "bold" }}>Sign Up</Text>
-          </TouchableOpacity>
-          <View style={styles.seperator} />
+          <Button
+            mode="outlined"
+            loading={isLoading}
+            onPress={handleSubmit}
+            style={styles.roundButton}
+            theme={{
+              colors: { primary: colors.primary },
+            }}
+            contentStyle={styles.button}
+            icon={{ uri: "https://i.stack.imgur.com/TiQ81.png" }}
+          >
+            Continue with Google
+          </Button>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-between",
+              marginTop: 10,
+            }}
+          >
+            <Text>Don't have an account?</Text>
+            <TocuhableText
+              text="  Sign up"
+              weight="bold"
+              onPress={handleNavigation}
+            />
+          </View>
         </View>
       </ScrollView>
     </SafeAreaView>
@@ -182,12 +210,12 @@ const styles = StyleSheet.create({
     //  backgroundColor: "dodgerblue"
   },
   logoView: {
-    height: height * 0.2,
+    height: height * 0.1,
     // backgroundColor: "tomato",
     justifyContent: "center",
     alignItems: "center",
-    padding: 50,
-    marginTop: 15,
+    padding: 25,
+    marginTop: 5,
   },
   formView: {
     // backgroundColor: "gold",
@@ -198,37 +226,31 @@ const styles = StyleSheet.create({
     paddingLeft: 20,
     paddingRight: 20,
   },
-  logo: { height: 120, width: 120 },
-  socialButtonDiv: {
-    flexDirection: "row",
-    marginTop: 5,
-    justifyContent: "space-between",
-    alignItems: "center",
-    paddingRight: 20,
-    paddingLeft: 20,
-  },
+  logo: { height: 80, width: 80, borderRadius: 40, overflow: "hidden" },
   buttonsContainer: {
-    marginTop: 10,
-    flexDirection: "row",
-    height: height * 0.1,
-    alignItems: "center",
-    justifyContent: "space-between",
-    paddingRight: 20,
+    padding: 25,
+    height: height * 0.3,
+    width: "100%",
+    justifyContent: "space-evenly",
     paddingLeft: 20,
-  },
-  button: {},
-  seperator: {
-    height: 0.7,
-    flex: 1,
-  },
-  signUpLinkDiv: {
-    marginTop: 10,
-    flexDirection: "row",
-    alignItems: "center",
+    paddingRight: 20,
     justifyContent: "space-between",
+    alignItems: "center",
   },
-  socialbutton: {
-    width: "40%",
-    borderRadius: 50,
+  button: {
+    height: 60,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  seperator: { backgroundColor: "grey", height: 0.7, flex: 1 },
+  title: {
+    fontSize: 24,
+    fontWeight: "bold",
+  },
+  roundButton: {
+    borderColor: colors.primary,
+    borderWidth: 2,
+    borderRadius: 10,
+    width: "100%",
   },
 });
