@@ -6,6 +6,7 @@ import {
   ScrollView,
   Text,
   TouchableOpacity,
+  Image,
 } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { Button, TextInput, HelperText } from "react-native-paper";
@@ -216,30 +217,40 @@ const SignUpScreen = (props) => {
             <View style={styles.seperator} />
           </View>
           <Button
-            mode="contained"
+            mode="outlined"
             loading={isLoading}
             onPress={handleFacebookSignUp}
             style={styles.roundButton}
             theme={{
-              colors: { primary: colors.facbook },
+              colors: { primary: colors.primary },
             }}
             contentStyle={styles.button}
-            icon={{
-              uri: "https://cdn-icons-png.flaticon.com/512/124/124010.png",
-            }}
+            icon={() => (
+              <Image
+                source={{
+                  uri: "https://cdn-icons-png.flaticon.com/512/124/124010.png",
+                }}
+                style={{ width: 20, height: 20, tintColor: colors.facbook }}
+              />
+            )}
           >
             Continue with Facebook
           </Button>
           <Button
-            mode="contained"
+            mode="outlined"
             loading={isLoading}
             onPress={handleGoogleSignUp}
             style={styles.roundButton}
             theme={{
-              colors: { primary: colors.google },
+              colors: { primary: colors.primary },
             }}
             contentStyle={styles.button}
-            icon={{ uri: "https://i.stack.imgur.com/TiQ81.png" }}
+            icon={() => (
+              <Image
+                source={{ uri: "https://i.stack.imgur.com/TiQ81.png" }}
+                style={{ width: 20, height: 20, tintColor: colors.google }}
+              />
+            )}
           >
             Continue with Google
           </Button>

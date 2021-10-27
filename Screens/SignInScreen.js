@@ -1,6 +1,12 @@
 import { StatusBar } from "expo-status-bar";
 import React, { useState } from "react";
-import { Button, TextInput, HelperText, IconButton } from "react-native-paper";
+import {
+  Button,
+  TextInput,
+  HelperText,
+  IconButton,
+  DefaultTheme,
+} from "react-native-paper";
 import {
   View,
   Text,
@@ -156,9 +162,14 @@ const SignInScreen = (props) => {
               colors: { primary: colors.primary },
             }}
             contentStyle={styles.button}
-            icon={{
-              uri: "https://cdn-icons-png.flaticon.com/512/124/124010.png",
-            }}
+            icon={() => (
+              <Image
+                source={{
+                  uri: "https://cdn-icons-png.flaticon.com/512/124/124010.png",
+                }}
+                style={{ width: 20, height: 20, tintColor: colors.facbook }}
+              />
+            )}
           >
             Continue with Facebook
           </Button>
@@ -171,7 +182,12 @@ const SignInScreen = (props) => {
               colors: { primary: colors.primary },
             }}
             contentStyle={styles.button}
-            icon={{ uri: "https://i.stack.imgur.com/TiQ81.png" }}
+            icon={() => (
+              <Image
+                source={{ uri: "https://i.stack.imgur.com/TiQ81.png" }}
+                style={{ width: 20, height: 20, tintColor: colors.google }}
+              />
+            )}
           >
             Continue with Google
           </Button>

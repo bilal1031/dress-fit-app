@@ -9,10 +9,12 @@ import {
   Platform,
   ScrollView,
   FlatList,
+  TouchableOpacity,
 } from "react-native";
-import { Appbar, Badge, Avatar } from "react-native-paper";
+import { Appbar, Badge, Avatar, DefaultTheme } from "react-native-paper";
 import logo from "../assets/topBar.jpg";
-import { SliderBox } from "react-native-image-slider-box";
+import AdSlider from "../Componenets/AdSlider";
+import ProductCard from "../Componenets/ProductCard";
 
 const HomeScreen = () => {
   const images = [
@@ -23,6 +25,77 @@ const HomeScreen = () => {
     "https://picsum.photos/200/300",
     "https://picsum.photos/200/300",
   ];
+  const newArrivals = [
+    {
+      title: "Men's Clothing Extraordinary...",
+      price: "900",
+      discountPrice: "700",
+      imageUrl: "https://picsum.photos/700",
+    },
+    {
+      title: "Men's Clothing Extraordinary...",
+      price: "900",
+      discountPrice: "",
+      imageUrl: "https://picsum.photos/700",
+    },
+    {
+      title: "Men's Clothing Extraordinary...",
+      price: "900",
+      discountPrice: "",
+      imageUrl: "https://picsum.photos/700",
+    },
+    {
+      title: "Men's Clothing Extraordinary...",
+      price: "900",
+      discountPrice: "",
+      imageUrl: "https://picsum.photos/700",
+    },
+    {
+      title: "Men's Clothing Extraordinary...",
+      price: "900",
+      discountPrice: "",
+      imageUrl: "https://picsum.photos/700",
+    },
+  ];
+  const justForYou = [
+    {
+      title: "Men's Clothing Extraordinary...",
+      price: "900",
+      discountPrice: "700",
+      imageUrl: "https://picsum.photos/700",
+    },
+    {
+      title: "Men's Clothing Extraordinary...",
+      price: "900",
+      discountPrice: "",
+      imageUrl: "https://picsum.photos/700",
+    },
+    {
+      title: "Men's Clothing Extraordinary...",
+      price: "900",
+      discountPrice: "",
+      imageUrl: "https://picsum.photos/700",
+    },
+    {
+      title: "Men's Clothing Extraordinary...",
+      price: "900",
+      discountPrice: "",
+      imageUrl: "https://picsum.photos/700",
+    },
+    {
+      title: "Men's Clothing Extraordinary...",
+      price: "900",
+      discountPrice: "",
+      imageUrl: "https://picsum.photos/700",
+    },
+    {
+      title: "Men's Clothing Extraordinary...",
+      price: "900",
+      discountPrice: "",
+      imageUrl: "https://picsum.photos/700",
+    },
+  ];
+  const theme = { ...DefaultTheme, rippleColor: "rgba(0, 0, 0, .32)" };
   return (
     <SafeAreaView style={styles.maincontainer}>
       <StatusBar backgroundColor="white" />
@@ -43,47 +116,12 @@ const HomeScreen = () => {
           onPress={() => console.log("Pressed archive")}
         />
       </Appbar>
-      <ScrollView style={{ flex: 1 }}>
+
+      <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         <View>
-          <SliderBox
-            images={images}
-            sliderBoxHeight={200}
-            onCurrentImagePressed={(index) =>
-              console.log(`image ${index} pressed`)
-            }
-            dotColor="black"
-            inactiveDotColor="#90A4AE"
-            paginationBoxVerticalPadding={20}
-            autoplay
-            circleLoop
-            resizeMethod={"resize"}
-            resizeMode={"cover"}
-            paginationBoxStyle={{
-              position: "absolute",
-              bottom: 0,
-              padding: 0,
-              alignItems: "center",
-              alignSelf: "center",
-              justifyContent: "center",
-              paddingVertical: 10,
-            }}
-            dotStyle={{
-              width: 5,
-              height: 5,
-              borderRadius: 2.5,
-              marginHorizontal: 0,
-              padding: 0,
-              margin: 0,
-              backgroundColor: "black",
-            }}
-            ImageComponentStyle={{
-              borderRadius: 15,
-              width: "97%",
-              marginTop: 5,
-            }}
-            imageLoadingColor="black"
-          />
+          <AdSlider images={images} />
         </View>
+
         <View style={styles.categoryListView}>
           <Text style={styles.divTitle}>Categories</Text>
           <FlatList
@@ -100,13 +138,52 @@ const HomeScreen = () => {
             )}
           />
         </View>
-        <View></View>
+
+        <View style={styles.newArrivalView}>
+          <Text style={styles.divTitle}>New Arrivals</Text>
+          <FlatList
+            horizontal
+            data={newArrivals}
+            showsHorizontalScrollIndicator={false}
+            key={(key) => key.title}
+            renderItem={({ item }) => <ProductCard item={item} />}
+          />
+        </View>
+
+        <View style={{ marginTop: 15 }}>
+          <Text style={[styles.divTitle, { marginLeft: 15 }]}>
+            Just For You
+          </Text>
+          <View style={styles.forYouView}>
+            {justForYou.map((item) => (
+              <ProductCard item={item} />
+            ))}
+            {justForYou.length % 2 != 0 ? (
+              <View style={styles.nullCard}></View>
+            ) : null}
+          </View>
+        </View>
+        <TouchableOpacity>
+          <Text
+            style={{
+              alignSelf: "center",
+              padding: 10,
+              fontStyle: "normal",
+              fontSize: 18,
+              textDecorationLine: "underline",
+              color: "blue",
+            }}
+          >
+            View More
+          </Text>
+        </TouchableOpacity>
       </ScrollView>
     </SafeAreaView>
   );
 };
 
 export default HomeScreen;
+
 const styles = StyleSheet.create({
   maincontainer: {
     flex: 1,
@@ -128,7 +205,17 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   divTitle: {
-    fontSize: 14,
+    fontSize: 16,
     fontWeight: "bold",
   },
+  newArrivalView: {
+    padding: 10,
+    marginTop: 15,
+  },
+  forYouView: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+  },
+  nullCard: { height: 220, width: 180 },
 });
