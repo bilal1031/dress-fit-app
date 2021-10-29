@@ -11,112 +11,22 @@ import {
   FlatList,
   TouchableOpacity,
 } from "react-native";
-import { Appbar, Badge, Avatar, DefaultTheme } from "react-native-paper";
-import logo from "../assets/topBar.jpg";
+import { Avatar } from "react-native-paper";
 import AdSlider from "../Componenets/AdSlider";
 import ProductCard from "../Componenets/ProductCard";
+import CustomAppbar from "../Componenets/CustomAppbar";
+import data from "../Store/dummyData";
+import NullCard from "../Componenets/NullCard";
 
 const HomeScreen = () => {
-  const images = [
-    "https://picsum.photos/200/300",
-    "https://picsum.photos/200/300",
-    "https://picsum.photos/200/300",
-    "https://picsum.photos/200/300",
-    "https://picsum.photos/200/300",
-    "https://picsum.photos/200/300",
-  ];
-  const newArrivals = [
-    {
-      title: "Men's Clothing Extraordinary...",
-      price: "900",
-      discountPrice: "700",
-      imageUrl: "https://picsum.photos/700",
-    },
-    {
-      title: "Men's Clothing Extraordinary...",
-      price: "900",
-      discountPrice: "",
-      imageUrl: "https://picsum.photos/700",
-    },
-    {
-      title: "Men's Clothing Extraordinary...",
-      price: "900",
-      discountPrice: "",
-      imageUrl: "https://picsum.photos/700",
-    },
-    {
-      title: "Men's Clothing Extraordinary...",
-      price: "900",
-      discountPrice: "",
-      imageUrl: "https://picsum.photos/700",
-    },
-    {
-      title: "Men's Clothing Extraordinary...",
-      price: "900",
-      discountPrice: "",
-      imageUrl: "https://picsum.photos/700",
-    },
-  ];
-  const justForYou = [
-    {
-      title: "Men's Clothing Extraordinary...",
-      price: "900",
-      discountPrice: "700",
-      imageUrl: "https://picsum.photos/700",
-    },
-    {
-      title: "Men's Clothing Extraordinary...",
-      price: "900",
-      discountPrice: "",
-      imageUrl: "https://picsum.photos/700",
-    },
-    {
-      title: "Men's Clothing Extraordinary...",
-      price: "900",
-      discountPrice: "",
-      imageUrl: "https://picsum.photos/700",
-    },
-    {
-      title: "Men's Clothing Extraordinary...",
-      price: "900",
-      discountPrice: "",
-      imageUrl: "https://picsum.photos/700",
-    },
-    {
-      title: "Men's Clothing Extraordinary...",
-      price: "900",
-      discountPrice: "",
-      imageUrl: "https://picsum.photos/700",
-    },
-    {
-      title: "Men's Clothing Extraordinary...",
-      price: "900",
-      discountPrice: "",
-      imageUrl: "https://picsum.photos/700",
-    },
-  ];
-  const theme = { ...DefaultTheme, rippleColor: "rgba(0, 0, 0, .32)" };
+  const images = data.images;
+  const newArrivals = data.newArrivals;
+  const justForYou = data.justForYou;
+
   return (
     <SafeAreaView style={styles.maincontainer}>
       <StatusBar backgroundColor="white" />
-      <Appbar style={styles.appBar}>
-        <Appbar.Header style={{ marginTop: 0, backgroundColor: "black" }}>
-          <Appbar.Action
-            icon="bell-ring"
-            onPress={() => console.log("Pressed archive")}
-          />
-          <Badge visible size={20} style={styles.badge}>
-            3
-          </Badge>
-        </Appbar.Header>
-
-        <Image source={logo} style={styles.logo} />
-        <Appbar.Action
-          icon="magnify"
-          onPress={() => console.log("Pressed archive")}
-        />
-      </Appbar>
-
+      <CustomAppbar style={{ marginTop: Platform.OS === "android" ? 24 : 0 }} />
       <ScrollView style={{ flex: 1 }} showsVerticalScrollIndicator={false}>
         <View>
           <AdSlider images={images} />
@@ -156,13 +66,12 @@ const HomeScreen = () => {
           </Text>
           <View style={styles.forYouView}>
             {justForYou.map((item) => (
-              <ProductCard item={item} />
+              <ProductCard item={item} key={Math.random()} />
             ))}
-            {justForYou.length % 2 != 0 ? (
-              <View style={styles.nullCard}></View>
-            ) : null}
+            {justForYou.length % 2 != 0 ? <NullCard /> : null}
           </View>
         </View>
+
         <TouchableOpacity>
           <Text
             style={{
@@ -188,22 +97,6 @@ const styles = StyleSheet.create({
   maincontainer: {
     flex: 1,
   },
-  appBar: {
-    backgroundColor: "black",
-    justifyContent: "space-between",
-    overflow: "hidden",
-    marginTop: Platform.OS === "android" ? 25 : 0,
-  },
-  logo: {
-    height: 55,
-    width: 150,
-  },
-  badge: { position: "absolute", top: 5, right: 5 },
-  categoryListView: {
-    justifyContent: "center",
-    padding: 5,
-    alignItems: "center",
-  },
   divTitle: {
     fontSize: 16,
     fontWeight: "bold",
@@ -217,5 +110,4 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
   },
-  nullCard: { height: 220, width: 180 },
 });
