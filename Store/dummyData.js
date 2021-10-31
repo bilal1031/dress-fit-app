@@ -8,6 +8,7 @@ const images = [
 ];
 const newArrivals = [
   {
+    id: 1,
     title: "Men's Clothing Extraordinary...",
     price: "900",
     discountPrice: "700",

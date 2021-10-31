@@ -1,11 +1,11 @@
 import { StatusBar } from "expo-status-bar";
-import React from "react";
+import React, { useState } from "react";
+import { useEffect } from "react";
 import {
   View,
   StyleSheet,
   Text,
   SafeAreaView,
-  Image,
   Platform,
   ScrollView,
   FlatList,
@@ -17,12 +17,28 @@ import ProductCard from "../Componenets/ProductCard";
 import CustomAppbar from "../Componenets/CustomAppbar";
 import data from "../Store/dummyData";
 import NullCard from "../Componenets/NullCard";
+import products from "../Service/getProducts";
+import string from "../Utilites/stringManipulation";
 
-const HomeScreen = () => {
+const HomeScreen = (props) => {
+  const [categories, setCategories] = useState([]);
   const images = data.images;
-  const newArrivals = data.newArrivals;
-  const justForYou = data.justForYou;
+  const [newArrivals, setNewArrivals] = useState([]);
+  const [justForYou, setJustForYou] = useState([]);
+  const navigation = props.navigation;
+  useEffect(() => {
+    products.getAllCategory().then((res) => {
+      setCategories(res);
+    });
+    products.getAllProducts().then((res) => {
+      setNewArrivals(res);
+      setJustForYou(res);
+    });
+  }, []);
 
+  const handleLoadProduct = (id) => {
+    navigation.navigate("signIn");
+  };
   return (
     <SafeAreaView style={styles.maincontainer}>
       <StatusBar backgroundColor="white" />
@@ -38,12 +54,12 @@ const HomeScreen = () => {
             style={{ marginTop: 25 }}
             showsHorizontalScrollIndicator={false}
             horizontal
-            data={images}
-            key={(key) => images}
+            data={categories}
+            key={(item) => item.id}
             renderItem={({ item }) => (
-              <View style={{ padding: 5, alignItems: "center" }}>
-                <Avatar.Image size={70} source={{ uri: item }} />
-                <Text>Category Item</Text>
+              <View style={{ width: 100, alignItems: "center" }}>
+                <Avatar.Image size={70} source={{ uri: images[0] }} />
+                <Text>{string.capitilize(item)}</Text>
               </View>
             )}
           />
@@ -55,8 +71,13 @@ const HomeScreen = () => {
             horizontal
             data={newArrivals}
             showsHorizontalScrollIndicator={false}
-            key={(key) => key.title}
-            renderItem={({ item }) => <ProductCard item={item} />}
+            key={(item) => item.id}
+            renderItem={({ item }) => (
+              <ProductCard
+                item={item}
+                onPress={() => handleLoadProduct(item.id)}
+              />
+            )}
           />
         </View>
 
@@ -66,7 +87,7 @@ const HomeScreen = () => {
           </Text>
           <View style={styles.forYouView}>
             {justForYou.map((item) => (
-              <ProductCard item={item} key={Math.random()} />
+              <ProductCard item={item} style={{ padding: "1%" }} />
             ))}
             {justForYou.length % 2 != 0 ? <NullCard /> : null}
           </View>
@@ -98,7 +119,7 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   divTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
   },
   newArrivalView: {
@@ -109,5 +130,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
+  },
+  categoryListView: {
+    padding: 15,
+    paddingBottom: 0,
   },
 });

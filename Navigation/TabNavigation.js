@@ -9,7 +9,7 @@ import CategoryScreen from "../Screens/CategoryScreen";
 import CartScreen from "../Screens/CartScreen";
 const Tab = createMaterialBottomTabNavigator();
 
-export default function TabNavigation() {
+export default function TabNavigation(props) {
   const [index, setIndex] = React.useState(0);
   const [routes] = React.useState([
     { key: "home", title: "Home", icon: "home", color: colors.secondary },
@@ -40,7 +40,7 @@ export default function TabNavigation() {
   ]);
 
   const renderScene = BottomNavigation.SceneMap({
-    home: HomeScreen,
+    home: () => <HomeScreen navigation={props.navigation} />,
     favourite: FavouriteScreen,
     setting: SettingsScreen,
     category: CategoryScreen,

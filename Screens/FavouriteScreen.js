@@ -3,11 +3,18 @@ import { View, Text, StyleSheet, StatusBar, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import CustomAppbar from "../Componenets/CustomAppbar";
 import NullCard from "../Componenets/NullCard";
-import data from "../Store/dummyData";
 import ProductCard from "../Componenets/ProductCard";
+import { useState } from "react/cjs/react.development";
+import { useEffect } from "react";
+import products from "../Service/getProducts";
 
 const FavouriteScreen = () => {
-  const fav = data.justForYou;
+  const [fav, setFav] = useState([]);
+  useEffect(() => {
+    products.getAllProducts().then((res) => {
+      setFav(res);
+    });
+  }, []);
   return (
     <SafeAreaView>
       <CustomAppbar />
@@ -19,9 +26,9 @@ const FavouriteScreen = () => {
 
           <View style={styles.forYouView}>
             {fav.map((item) => (
-              <ProductCard item={item} key={Math.random()} />
+              <ProductCard item={item} key={item.id} />
             ))}
-            {fav.length % 2 != 0 ? <NullCard /> : null}
+            {fav.length % 2 != 0 ? <NullCard key={item.id} /> : null}
           </View>
         </View>
       </ScrollView>
@@ -37,7 +44,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
   },
   divTitle: {
-    fontSize: 16,
+    fontSize: 18,
     fontWeight: "bold",
   },
   newArrivalView: {
